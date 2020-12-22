@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tutoriel JavaScript</title>
+    <script>
+        "use strict";
+        window.onload = function(){
+
+            window.document.forms.le_form.onsubmit = function() {
+                var data = {};
+
+                for( var i = 0; i < window.document.forms.le_form.length; i++) {
+                    if (window.document.forms.le_form[i].name) {
+                        console.log(window.document.forms.le_form[i].name);
+                        data[window.document.forms.le_form[i].name] = window.document.forms.le_form[i].value
+                    }
+                }
+                
+                console.dir(data);
+                
+                return false;
+                
+            }
+        }
+
+
+    </script>
+</head>
+<body>
+    <form name="le_form">
+        nom: <input type="text" name="nom" value=""></br>
+        prénom: <input type="text" name="prenom" value=""></br>
+        <input type="submit" value="Envoyer">
+    </form>
+
+    </form>
+
+</body>
+</html>
