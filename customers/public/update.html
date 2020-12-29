@@ -6,6 +6,24 @@
     <script>
         "use strict";
         window.onload = function() {
+            var customer_id = window.location.search.substr(1);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/customers/"+customer_id, true );
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var str_response = xhr.responseText;
+                    var customer = eval('('+str_response+')');
+                    console.log(customer);
+                    window.document.forms.le_form.name.value = customer.name;
+                    window.document.forms.le_form.firstname.value = customer.firstname;
+                    window.document.forms.le_form.id.value = customer.id;
+                    console.log(customer.id);
+                } else {
+                    console.error('Envoie KO');
+                }
+            }
+
+            xhr.send();
 
             window.document.forms.le_form.onsubmit = function() {
                 var data = {};
@@ -24,10 +42,10 @@
                 // Transformer l'objet en une chaîne de charactère pour être en mesure de l'envoyer
                 var str_data = JSON.stringify(data);
                 console.log(str_data);
-
+                
                 // Objet xhr pour la connexion au serveur
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/gens", true );
+                xhr.open("PUT", "/customers", true );
                 xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {
@@ -49,8 +67,9 @@
 </head>
 <body>
     <form name="le_form">
-        nom: <input type="text" name="nom" value=""></br>
-        prénom: <input type="text" name="prenom" value=""></br>
+        <input type="hidden" value="" name="id">
+        nom: <input type="text" name="name" value=""></br>
+        prénom: <input type="text" name="firstname" value=""></br>
         <input type="submit" value="Envoyer">
     </form>
 

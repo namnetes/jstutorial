@@ -1,0 +1,2 @@
+#!/bin/bash
+dpd --host localhost --mongoPort 2717 -d

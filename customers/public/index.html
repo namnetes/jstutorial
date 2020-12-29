@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tutoriel JavaScript</title>
+    <script>
+        "use strict";
+        window.onload = function() {
+
+            var url_data = 'http://172.20.78.181:2403/customers/' ;
+            var customers;
+            var customer;
+            
+            var xhr = new XMLHttpRequest() ;
+            xhr.open('GET', url_data, true);
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    customers = eval('('+xhr.responseText+')');
+                    for(customer of customers) {
+                        console.log(customer);
+                        var tbody = window.document.querySelector('tbody');
+                        var tr = window.document.createElement('tr');
+                        var td_name = window.document.createElement('td');
+                        var td_firstname = window.document.createElement('td');
+                        var td_action = window.document.createElement('td');
+
+                        var a_delete = "<a href=''>delete</a>";
+                        var customer_id = customer.id ;
+                        console.log(customer_id);
+                        var a_update = "<a href='/update.html?"+customer_id+"'>update</a>";
+
+                        td_name.innerHTML = customer.name;
+                        td_firstname.innerHTML = customer.firstname;
+                        td_action.innerHTML = a_delete+' | '+a_update;
+
+                        tr.appendChild(td_name);
+                        tr.appendChild(td_firstname);
+                        tr.appendChild(td_action);
+
+                        tbody.appendChild(tr);
+                    }
+                }
+            }
+
+            xhr.send();
+            //return false;
+        }
+
+    </script>
+</head>
+<body>
+    <a href = 'create.html'>Create</a>
+    <table>
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Firstname</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+    </table>
+
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+#!/bin/bash
+# dashboard is located to http://ip:2403/dashboard 
+dpd --host localhost --mongoPort 2717 -d
